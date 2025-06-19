@@ -1,0 +1,17 @@
+name: Publish Node Docker
+on: 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build & Push Image
+      run: |
+        echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u "rubyrose12" --password-stdin
+        docker image build -t rubyrose12/softeng:latest .
+        docker push rubyrose12/softeng:latest
